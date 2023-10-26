@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 등록</title>
+</head>
+<body>
+<h1>보고싶은 뮤지컬 등록</h1>
+
+<form action="/order/regist" method="post">
+    <label>출연진 : </label><input type="text" name="orderer"><br/>
+    <label>뮤지컬 가격 : </label><input type="number" name="orderPrice"><br/>
+    <label>장소 : </label>
+    <select name="orderStatus" id="orderStatus"></select><br/>
+    <label>뮤지컬 날짜 </label><input type="text" name="orderDate"><br/>
+    <label>줄거리 : </label>
+    <select name="size">
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+    </select>
+    <input type="submit" value="보고싶은 뮤자컬 등록">
+</form>
+
+<script>
+    fetch('/order/category')
+        .then(res => res.json())
+        .then(data => {
+            const $orderStatus = document.getElementById('orderStatus');
+
+            for(let index in data){
+                const $option = document.createElement('option');
+                $option.value = data[index].orderStatus;
+                $option.textContent = data[index].status;
+
+                $orderStatus.appendChild($option);
+            }
+        })
+</script>
+</body>
+</html>
